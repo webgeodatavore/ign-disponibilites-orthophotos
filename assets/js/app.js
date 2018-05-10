@@ -309,12 +309,6 @@ map.on('click', function(e) {
   }
 });
 
-var layerSwitcher = new ol.control.LayerSwitcher({
-  tipLabel: 'Légende' // Optional label for button
-});
-
-map.addControl(layerSwitcher);
-
 document.querySelector('#legend-panel').addEventListener('click', function(e) {
   if (e.target && e.target.type === 'radio') {
     ['orthohr', 'ortho50cm', 'ortho5m'].forEach(id => {
