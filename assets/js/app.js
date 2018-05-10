@@ -2,23 +2,6 @@
 var zoom = 6;
 var center = [-2.3, 48.1];
 
-// fetch('ne_110m_admin_0_countries-5-digits.pbf')
-//   .then(function(response) {
-//     response.arrayBuffer().then(function(buffer) {
-//       // var byteArray = new Uint8Array(buffer);
-//       var pbf = new Pbf(buffer);
-//       var geojson = geobuf.decode(pbf);
-//       console.log(geojson);
-//       var geoJsonFormat = new ol.format.GeoJSON();
-//       var features = geoJsonFormat.readFeatures(
-//         geojson, {
-//           featureProjection: 'EPSG:3857'
-//         }
-//       );
-//       vectorLayer.getSource().addFeatures(features);
-//     });
-//   })
-
 var osm_source = new ol.source.Stamen({
   layer: 'toner-lite'
 });
@@ -291,12 +274,10 @@ map.addOverlay(popup);
 map.on('click', function(e) {
   var info = [];
   map.forEachFeatureAtPixel(e.pixel, function (feature) {
-    console.log(feature);
-    info.push(/*feature.get('title') + '<br>' + */feature.get('NOM_DEP') + ' (' + feature.get('INSEE_DEP') + ')');
+    info.push(feature.get('NOM_DEP') + ' (' + feature.get('INSEE_DEP') + ')');
   }, {
     layerFilter: function (layer) {
       if (layer.getVisible() && ['orthohr', 'ortho5m', 'ortho50cm'].indexOf(layer.get('id')) !== -1) {
-        console.log(layer.get('id'));
         return true
       }
     }
@@ -316,9 +297,6 @@ document.querySelector('#legend-panel').addEventListener('click', function(e) {
         map.getLayers().getArray()[1].getLayers().getArray().find(layer => {
           return (layer.get('id') == id);
         }).setVisible(true);
-        console.log(map.getLayers().getArray()[1].getLayers().getArray().find(layer => {
-          return (layer.get('id') == id);
-        }).get('id'));
         if (legends[id]) {
           attachLegend(legends[id]);
         } else {
